@@ -1,6 +1,17 @@
 from typing import Dict, List, Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+import calculator
+
+def main():
+    # 1. Access the function using the module name
+    result = calculator.add(5, 3)
+    print(f"Result 1 (full import): {result}")
+
+    # 2. Alternative: Import a specific function
+    # from calculator import add as sum_numbers
+    # result_2 = sum_numbers(10, 2)
+    # print(f"Result 2 (specific import): {result_2}")
 
 # 1. Pydantic Model for Data Validation and Serialization
 class Item(BaseModel):
@@ -62,9 +73,11 @@ async def delete_item(item_name: str):
         raise HTTPException(status_code=404, detail="Item not found")
     del items_db[item_name]
     return {"message": "Item deleted successfully"}
-
+    
 # -----------------
 # 3. Running the App
 # -----------------
+main()
+
 
 # Run this from your terminal: uvicorn main:app --reload
